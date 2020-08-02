@@ -55,8 +55,6 @@ class GameFragment : Fragment() {
 
         // Get the viewModel
         viewModel = ViewModelProviders.of(this).get(GameViewModel::class.java)
-        viewModel.score.observe(viewLifecycleOwner, Observer { newScore ->
-        })
         // Observer for the Game finished event
         viewModel.eventGameFinish.observe(viewLifecycleOwner, Observer<Boolean> { hasFinished ->
             if (hasFinished) gameFinished()
@@ -67,6 +65,7 @@ class GameFragment : Fragment() {
         binding.gameViewModel = viewModel
         updateScoreText()
         updateWordText()
+        binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
 
@@ -74,9 +73,6 @@ class GameFragment : Fragment() {
 
     private fun updateWordText() {
         /** Setting up LiveData observation relationship **/
-        viewModel.word.observe(viewLifecycleOwner, Observer { newWord ->
-            binding.wordText.text = newWord
-        })
     }
 
     private fun updateScoreText() {
